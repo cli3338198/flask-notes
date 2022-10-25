@@ -4,69 +4,74 @@ from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 
+bcrypt = Bcrypt()
+
+
 class User(db.Model):
-  """User."""
+    """User."""
 
-  __tablename__ = "users"
+    __tablename__ = "users"
 
-  username = db.Column(
-    db.String(20),
-    primary_key=True,
-    nullable=False,
-  )
+    username = db.Column(
+        db.String(20),
+        primary_key=True,
+        nullable=False,
+    )
 
-  password = db.Column(
-    db.String(100),
-    nullable=False,
-  )
+    password = db.Column(
+        db.String(100),
+        nullable=False,
+    )
 
-  email = db.Column(
-    db.String(50),
-    nullable=False,
-    unique=True
-  )
+    email = db.Column(
+        db.String(50),
+        nullable=False,
+        unique=True
+    )
 
-  firstname = db.Column(
-    db.String(30),
-    nullable=False,
+    firstname = db.Column(
+        db.String(30),
+        nullable=False,
 
-  )
+    )
 
-  lastname = db.Column(
-    db.String(30),
-    nullable=False,
-  )
+    lastname = db.Column(
+        db.String(30),
+        nullable=False,
+    )
 
-  @classmethod
-  def register(cls, 
-      username, 
-      password, 
-      email, 
-      firstname, 
-      lastname
-  ):
+    @classmethod
+    def register(cls,
+                 username,
+                 password,
+                 email,
+                 firstname,
+                 lastname
+                 ):
 
-      hashed = Bcrypt.generate_password_hash(f'{username} {password}').decode('utf8')
+        # hashed = bcrypt.generate_password_hash(
+        #     f'{username} {password}', 10).decode('utf8')
 
-      return cls(username=username, 
-        password=hashed, 
-        email=email, 
-        firstname=firstname, 
-        lastname=lastname
-      )
+        hashed = bcrypt.generate_password_hash(password).decode('utf8')
 
-  @classmethod
-  def authenticate(cls, username, password):
-    """Authenticate the user."""
+        return cls(username=username,
+                   password=hashed,
+                   email=email,
+                   firstname=firstname,
+                   lastname=lastname
+                   )
 
-    user = cls.query.get_or_404(username).one_or_none()
+    @classmethod
+    def authenticate(cls, username, password):
+        """Authenticate the user."""
 
-    if user and Bcrypt.check_password_hash(f'{username} {password}', user.password):
-      return user
+        user = cls.query.filter_by(username=username).one_or_none()
 
-    else:
-      return False
+        if user and bcrypt.check_password_hash(user.password, password):
+            return user
 
+        else:
+            return False
 
 
 def connect_db(app):

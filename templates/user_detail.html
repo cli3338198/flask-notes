@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} User Detail {% endblock %}
+{% block content %}
+
+<h1>{{user.firstname}} {{user.lastname}}</h1>
+<p>{{user.email}}</p>
+
+<h3>Notes</h3>
+<ul></ul>
+
+<form action="">
+  <button formaction="" formmethod="">Add Note</button>
+
+  <button formaction="" formmethod="">Delete User</button>
+</form>
+{% endblock %}
