@@ -1,16 +1,41 @@
-{% extends 'base.html' %}
-{% block title %} User Detail {% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} User Detail {% endblock %} {% block
+content %}
 
 <h1>{{user.firstname}} {{user.lastname}}</h1>
 <p>{{user.email}}</p>
 
 <h3>Notes</h3>
-<ul></ul>
+<ul>
+  {% for note in notes %}
+  <li>
+    <div>
+      <!-- scratch pad -->
+      <a href="">
+        <i class="bi bi-pencil-square"></i>
+      </a>
+      <!-- trash can -->
+      <a href="">
+        <i class="bi bi-trash-fill"></i>
+      </a>
 
-<form action="">
-  <button formaction="" formmethod="">Add Note</button>
+      <strong>{{ note.title }}</strong>
+      <span>{{ note.content }}</span>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
 
-  <button formaction="" formmethod="">Delete User</button>
+<form action="/users/{{ user.username }}/notes/add">
+  <button>Add Note</button>
 </form>
+
+<form
+  id="user-delete-form"
+  action="/users/{{ user.username }}/delete"
+  method="POST"
+>
+  {{ form.hidden_tag() }}
+  <button>Delete User</button>
+</form>
+
 {% endblock %}

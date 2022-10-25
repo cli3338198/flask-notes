@@ -48,9 +48,7 @@ class User(db.Model):
                  firstname,
                  lastname
                  ):
-
-        # hashed = bcrypt.generate_password_hash(
-        #     f'{username} {password}', 10).decode('utf8')
+        """Registers the user, creates a hashed password, return user"""
 
         hashed = bcrypt.generate_password_hash(password).decode('utf8')
 
@@ -63,7 +61,7 @@ class User(db.Model):
 
     @classmethod
     def authenticate(cls, username, password):
-        """Authenticate the user."""
+        """Authenticate the user, if not authenticated, return False"""
 
         user = cls.query.filter_by(username=username).one_or_none()
 
@@ -72,6 +70,33 @@ class User(db.Model):
 
         else:
             return False
+
+class Note(db.Model):
+    """Note."""
+
+    __tablename__ = "notes"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    title = db.Column(
+        db.String(100),
+        nullable=False,
+    )
+
+    content = db.Column(
+        db.Text,
+        nullable=False,
+    )
+
+    owner = db.Column(
+        db.String(20),
+        db.ForeignKey('users.username'),
+        nullable=False
+    )
 
 
 def connect_db(app):
