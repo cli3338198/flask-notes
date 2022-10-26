@@ -61,7 +61,9 @@ class User(db.Model):
 
     @classmethod
     def authenticate(cls, username, password):
-        """Authenticate the user, if not authenticated, return False"""
+        """Authenticate the user.
+        If authenticated, return user.
+        If not authenticated, return False"""
 
         user = cls.query.filter_by(username=username).one_or_none()
 
@@ -70,6 +72,7 @@ class User(db.Model):
 
         else:
             return False
+
 
 class Note(db.Model):
     """Note."""
@@ -92,7 +95,7 @@ class Note(db.Model):
         nullable=False,
     )
 
-    owner = db.Column(
+    owner = db.Column(  # better name is owner_username
         db.String(20),
         db.ForeignKey('users.username'),
         nullable=False

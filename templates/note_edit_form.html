@@ -1,6 +1,6 @@
-{% extends 'base.html' %} {% block title %} Login Form {% endblock %} {%block
-content %}
-<form id="user-login-form" method="POST">
+{% extends 'base.html' %} {% block title %} Edit Note Form {% endblock %} {%
+block content %}
+<form id="note-add-form" method="POST">
   {{ form.hidden_tag() }}
   <!--add type=hidden form fields -->
   {% for field in form if field.widget.input_type != 'hidden' %}
@@ -9,6 +9,6 @@ content %}
     endfor %}
   </p>
   {% endfor %}
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 {% endblock %}

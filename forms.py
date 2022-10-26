@@ -16,7 +16,7 @@ class UserRegisterForm(FlaskForm):
         validators=[InputRequired(), Length(max=100)])
 
     email = StringField(
-        'Email',
+        'Email',  # there is a better validator - email
         validators=[InputRequired(), Length(max=50)])
 
     firstname = StringField(
@@ -40,15 +40,23 @@ class UserLoginForm(FlaskForm):
         validators=[InputRequired(), Length(max=100)])
 
 
-class UserLogoutForm(FlaskForm):
-    """ Form for logging user out"""
+class CSRFForm(FlaskForm):
+    """ Form for validating CSRF token"""
 
-class UserDeleteForm(FlaskForm):
-    """Form for deleting a user."""
 
 class NoteAddForm(FlaskForm):
     """Form for adding a note"""
 
     title = StringField("Title", validators=[InputRequired(), Length(max=100)])
 
+    content = StringField("Content", validators=[InputRequired()])
+
+
+class NoteEditForm(FlaskForm):
+    """ Form for editing note """
+
+    title = StringField("Title", validators=[
+        InputRequired(), Length(max=100)])
+
+    # textarea in wtform to make text box larger
     content = StringField("Content", validators=[InputRequired()])

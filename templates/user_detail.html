@@ -10,13 +10,15 @@ content %}
   <li>
     <div>
       <!-- scratch pad -->
-      <a href="">
-        <i class="bi bi-pencil-square"></i>
-      </a>
+      <form action="/notes/{{ note.id }}/update">
+        {{ form.hidden_tag() }}
+        <button type="submit" class="btn btn-link"><i class="bi bi-pencil-square"></i></button>
+      </form>
       <!-- trash can -->
-      <a href="">
-        <i class="bi bi-trash-fill"></i>
-      </a>
+      <form action="/notes/{{ note.id }}/delete" method="POST">
+        {{ form.hidden_tag() }}
+        <button type="submit" class="btn btn-link"><i class="bi bi-trash-fill"></i></button>
+      </form>
 
       <strong>{{ note.title }}</strong>
       <span>{{ note.content }}</span>
@@ -26,16 +28,15 @@ content %}
 </ul>
 
 <form action="/users/{{ user.username }}/notes/add">
-  <button>Add Note</button>
+  <button class="btn btn-primary">Add Note</button>
 </form>
 
-<form
-  id="user-delete-form"
-  action="/users/{{ user.username }}/delete"
-  method="POST"
->
+<!-- make the add note has an <a> and make it look like a button by adding the bootstrap classes -->
+
+<form id="user-delete-form" action="/users/{{ user.username }}/delete" method="POST">
   {{ form.hidden_tag() }}
-  <button>Delete User</button>
+  <button class="btn btn-danger">Delete User</button>
 </form>
+
 
 {% endblock %}

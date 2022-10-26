@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %} Registration Form {% endblock %} {%
+{% extends 'base.html' %} {% block title %} Add Note Form {% endblock %} {%
 block content %}
 <form id="note-add-form" method="POST">
   {{ form.hidden_tag() }}
@@ -9,6 +9,6 @@ block content %}
     endfor %}
   </p>
   {% endfor %}
-  <button type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 {% endblock %}
